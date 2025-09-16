@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -15,6 +17,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProps = project.rootProject.file("local.properties")
+        if (localProps.exists()) {
+            val properties = Properties()
+            properties.load(localProps.inputStream())
+            buildConfigField(
+                "String",
+                "NEWS_API_KEY",
+                "\"${properties.getProperty("NEWS_API_KEY")}\""
+            )
+        }
     }
 
     buildTypes {
@@ -33,9 +46,14 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures.buildConfig = true
 }
 
 dependencies {
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
