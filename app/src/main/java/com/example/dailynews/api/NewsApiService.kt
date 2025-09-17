@@ -1,10 +1,9 @@
-package com.example.dailynews
+package com.example.dailynews.api
 
 import com.example.dailynews.news.NewsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-
 
 interface NewsApiService {
     @GET("everything")
