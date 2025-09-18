@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dailynews.imageloader.GlideImageLoader
 import com.example.dailynews.adapter.NewsViewHolder
 import com.example.dailynews.R
-import com.example.dailynews.news.ShortNews
+import com.example.dailynews.news.News
 
 class NewsAdapter(
     context : Context,
-    private val layoutInflater: LayoutInflater
+    private val layoutInflater: LayoutInflater,
+    private val itemClick : (News) -> Unit
 ) : RecyclerView.Adapter<NewsViewHolder>() {
-
     private val imageLoader = GlideImageLoader(context)
-    private val listOfNews = mutableListOf<ShortNews>()
+    private val listOfNews = mutableListOf<News>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,7 +31,7 @@ class NewsAdapter(
     ) {
         val news = listOfNews[position]
 
-        val urlToImage = news.imageUrl ?: "None"
+        val urlToImage = news.urlToImage ?: "None"
         val title = news.title ?: "None"
         val content = news.content ?: "None"
 
@@ -39,12 +39,16 @@ class NewsAdapter(
 
         holder.tvTitle.text = title
         holder.tvContent.text = content
+
+        holder.itemView.setOnClickListener {
+            itemClick(news)
+        }
     }
 
     override fun getItemCount(): Int = listOfNews.size
 
-    fun addNews(shortNews: ShortNews) {
-        listOfNews.add(shortNews)
+    fun addNews(news: News) {
+        listOfNews.add(news)
         notifyItemInserted(listOfNews.lastIndex)
     }
 }
