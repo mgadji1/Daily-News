@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dailynews.imageloader.GlideImageLoader
-import com.example.dailynews.adapter.NewsViewHolder
 import com.example.dailynews.R
 import com.example.dailynews.news.News
 
