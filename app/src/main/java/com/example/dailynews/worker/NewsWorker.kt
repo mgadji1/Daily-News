@@ -63,12 +63,12 @@ class NewsWorker(
         val jsonArray = JSONArray()
 
         for (article in articles) {
-            val author = article.author
-            val url = article.url
-            val publishTime = article.publishedAt
-            val imageUrl = article.urlToImage
-            val title = article.title
-            val htmlContent = article.content
+            val author = article.author ?: "None"
+            val url = article.url ?: "None"
+            val publishTime = article.publishedAt ?: "None"
+            val imageUrl = article.urlToImage ?: "None"
+            val title = article.title ?: "None"
+            val htmlContent = article.content ?: "None"
 
             val content = Html.fromHtml(htmlContent, Html.FROM_HTML_MODE_LEGACY).toString()
 

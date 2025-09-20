@@ -1,8 +1,8 @@
 package com.example.dailynews
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -61,8 +61,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayNews() {
-        val prefs = getSharedPreferences("news_prefs", Context.MODE_PRIVATE)
+        Log.d("Display", "display")
+        val prefs = getSharedPreferences("news_prefs", MODE_PRIVATE)
         val json = prefs.getString("latest_news", null)
+
+        Log.d("Json", "$json")
 
         if (!json.isNullOrEmpty()) {
             val jsonArray = JSONArray(json)
@@ -71,12 +74,12 @@ class MainActivity : AppCompatActivity() {
                 val obj = jsonArray.getJSONObject(i)
 
                 val news = News(
-                    obj.getString("author"),
-                    obj.getString("title"),
-                    obj.getString("url"),
-                    obj.getString("imageUrl"),
-                    obj.getString("publishedAt"),
-                    obj.getString("content")
+                    obj.optString("author", "None"),
+                    obj.optString("title", "None"),
+                    obj.optString("url", "None"),
+                    obj.optString("imageUrl", "None"),
+                    obj.optString("publishedAt", "None"),
+                    obj.optString("content", "None")
                 )
 
                 adapter.addNews(news)
